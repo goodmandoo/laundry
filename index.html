@@ -126,4 +126,51 @@
         }
 
         function startWashing() {
-            const input =
+            const input = document.getElementById('worryInput');
+            if (!input.value.trim()) return alert("고민을 적어주세요!");
+            input.style.opacity = "0";
+            setTimeout(() => { input.value = ""; input.style.opacity = "1"; alert("세탁 완료! 🫧"); }, 2000);
+        }
+
+        let breathTimer = null;
+        let count = 4;
+        let mode = "들숨";
+
+        function startBreathGuide() {
+            const text = document.getElementById('breathText');
+            stopBreathGuide(); // 중복 방지
+            
+            count = 4;
+            mode = "들숨";
+            text.innerText = `${mode}... ${count}`;
+
+            breathTimer = setInterval(() => {
+                count--;
+                if (count <= 0) {
+                    count = 4;
+                    mode = (mode === "들숨") ? "날숨" : "들숨";
+                }
+                text.innerText = `${mode}... ${count}`;
+            }, 1000); // 1초마다 숫자 변경
+        }
+
+        function stopBreathGuide() {
+            if (breathTimer) {
+                clearInterval(breathTimer);
+                breathTimer = null;
+            }
+        }
+
+        function getPrescription() {
+            const mood = document.getElementById('moodSelect').value;
+            const advice = {
+                "불안": "불안은 미래에 가 있는 마음입니다. 지금 발바닥의 감각에 집중해 보세요.",
+                "분노": "화는 뜨거운 숯불을 던지기 위해 쥐고 있는 것과 같습니다. 당신의 손부터 보호하세요.",
+                "지침": "아무것도 하지 않는 것은 '회복'입니다. 오늘 10분만 멍하게 있어보세요.",
+                "허무": "공허함은 새로운 것을 채울 수 있는 빈 그릇입니다. 작은 기쁨을 담아보세요."
+            };
+            document.getElementById('prescriptionResult').innerText = advice[mood];
+        }
+    </script>
+</body>
+</html>
