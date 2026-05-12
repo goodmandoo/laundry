@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>마음세탁소 🫧</title>
+    <link rel="icon" href="https://fav.farm/🫧">
+
+    <style>
+        /* [CSS 영역] 인테리어와 애니메이션 담당 */
+        body {
+            background-color: #f0f7ff; /* 연한 하늘색 배경 (세탁소 느낌) */
+            color: #334455; /* 진한 회색 글자 */
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .laundry-card {
+            /* [투명 박스] 메인 컨테이너 */
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        /* [탭 메뉴 스위치] 세 가지 기능을 고르는 버튼들 */
+        .tab-menu {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            background: #eef2f6;
+            padding: 5px;
+            border-radius: 15px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 10px;
+            transition: 0.3s;
+            color: #8899aa;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #2575fc;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-weight: bold;
+        }
+
+        /* 각 섹션 숨기기/보이기 설정 */
+        .content-section { display: none; min-height: 250px; }
+        .content-section.active { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in; 
+        }
+
+        /* 1. [세탁 섹션] 애니메이션 */
+        .wash-away {
+            transition: 2s; /* [지우개 효과] 서서히 사라지는 시간 */
+            opacity: 1;
+        }
+
+        /* 2. [호흡 섹션] 커졌다 작아지는 원 */
+        .breath-circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-radius: 50%;
+            animation: breathe 8s infinite ease-in-out; /* 8초 주기로 무한 반복 */
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); } /* 처음과 끝: 기본 크기 */
+            50% { transform: scale(1.5); } /* 중간: 1.5배 커짐 (들숨) */
+        }
+
+        /* [공통 가구 디자인] */
+        textarea, select, button {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #e0e6ed;
+            margin: 10px 0;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button.main-btn {
+            background: #2575fc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button.main-btn:hover { background: #1a5dbb; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="laundry-card">
+        <h1>마음세탁소 🫧</h1>
+        
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="openTab('wash')">고민 세탁</button>
+            <button class="tab-btn" onclick="openTab('breathe')">호흡 건조</button>
+            <button class="tab-btn" onclick="openTab('prescription')">마음 처방</button>
+        </div>
+
+        <div id="wash" class="content-section active">
+            <p>버리고 싶은 마음을 적어주세요.</p>
+            <textarea id="worryInput" placeholder="여기에 고민을 쓰면 세탁되어 사라집니다..."></textarea>
+            <button class="main-btn" onclick="startWashing()">세탁 시작 🫧</button>
+        </div>
+
+        <div id="breathe" class="content-section">
+            <p>원의 크기에 맞춰 숨을 쉬어보세요.</p>
+            <div class="breath-circle"></div>
+            <p id="breathText" style="margin-top: 20px; color: #2575fc;">들숨... (4초)</p>
+        </div>
+
+        <div id="prescription" class="content-section">
+            <p>오늘 당신의 마음 상태는 어떤가요?</p>
+            <select id="moodSelect">
+                <option value="불안">불안해요</option>
+                <option value="분노">화가 나요</option>
+                <option value="지침">너무 지쳤어요</option>
+                <option value="허무">공허해요</option>
+            </select>
+            <button class="main-btn" onclick="getPrescription()">처방전 받기 ✨</button>
+            <div id="prescriptionResult" style="margin-top: 20px; font-weight: bold;"></div>
+        </div>
+    </div>
+
+    <script>
+        /* [JS 영역] 각 방의 기계 장치들을 돌리는 로직 */
+
+        // [탭 전환 기계] 누른 버튼의 방만 보여주기
+        function openTab(tabName) {
+            const sections = document.getElementsByClassName('content-section');
+            const btns = document.getElementsByClassName('tab-btn');
+            
+            for (let s of sections) s.classList.remove('active');
+            for (let b of btns) b.classList.remove('active');
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // 호흡 탭일 경우 텍스트 애니메이션 시작
+            if (tabName === 'breathe') startBreathGuide();
+        }
+
+        // 기능 1: [고민 세탁] 글자 지우개
+        function startWashing() {
+            const input = document.getElementById('worryInput');
+            if (input.value === "") return alert("세탁할 고민을 적어주세요!");
+            
+            input.style.opacity = "0"; // [지우개] 서서히 투명하게 만들기
+            setTimeout(() => {
+                input.value = "";
+                input.style.opacity = "1";
+                alert("고민이 깨끗하게 세탁되어 사라졌습니다! 🫧");
+            }, 2000);
+        }
+
+        // 기능 2: [호흡 건조] 텍스트 가이드
+        function startBreathGuide() {
+            const text = document.getElementById('breathText');
+            setInterval(() => {
+                text.innerText = text.innerText === "들숨... (4초)" ? "날숨... (4초)" : "들숨... (4초)";
+            }, 4000); // 4초마다 텍스트 변경
+        }
+
+        // 기능 3: [마음 처방] 조언 추출기
+        function getPrescription() {
+            const mood = document.getElementById('moodSelect').value;
+            const resDiv = document.getElementById('prescriptionResult');
+            
+            const advice = {
+                "불안": "불안은 미래에 가 있는 마음입니다. 지금 발바닥의 감각에 집중해 보세요.",
+                "분노": "화는 뜨거운 숯불을 던지기 위해 쥐고 있는 것과 같습니다. 먼저 당신의 손을 보호하세요.",
+                "지침": "아무것도 하지 않는 것은 게으름이 아니라 '충전'입니다. 오늘 10분은 멍하게 있어보세요.",
+                "허무": "공허함은 새로운 것을 채울 수 있는 빈 그릇이 생겼다는 뜻입니다. 작은 기쁨 하나만 담아보세요."
+            };
+
+            resDiv.innerText = advice[mood];
+            resDiv.style.animation = 'fadeIn 1s';
+        }
+    </script>
+</body>
+</html>₩
