@@ -3,116 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마음세탁소 🫧</title>
+    <title>마음세탁소 🫧 (Spotify Edition)</title>
     <link rel="icon" href="https://fav.farm/🫧">
     <style>
-        body {
-            background-color: #f0f7ff;
-            color: #334455;
-            font-family: sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+        /* 1. [스포티파이 감성] 깊은 밤의 어둠 테마 적용 */
+        body { 
+            background-color: #121212; /* 가장 깊은 배경색 */
+            color: #ffffff; /* 기본 글자는 순백색 */
+            font-family: sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+            box-sizing: border-box; 
         }
-        .laundry-card {
-            width: 100%;
-            max-width: 450px;
-            background: white;
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            text-align: center;
+
+        /* 2. [가이드 반영] Elevated Surface 디자인 */
+        .laundry-card { 
+            width: 100%; 
+            max-width: 450px; 
+            background: #181818; /* 카드 표면색 */
+            padding: 30px; 
+            border-radius: 8px; /* 가이드대로 8px Subtle 라운딩 */
+            box-shadow: rgba(0,0,0,0.5) 0px 8px 24px; /* 가이드에 적힌 Heavy Shadow 그대로 반영 */
+            text-align: center; 
         }
-        .tab-menu {
-            display: flex;
-            margin-bottom: 30px;
-            background: #eef2f6;
-            padding: 5px;
-            border-radius: 15px;
+
+        /* 3. [가이드 반영] 알약(Pill) 모양의 탭 메뉴 */
+        .tab-menu { 
+            display: flex; 
+            margin-bottom: 30px; 
+            background: #1f1f1f; 
+            padding: 5px; 
+            border-radius: 9999px; /* 완벽한 알약 구조 */
         }
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 12px;
-            cursor: pointer;
-            flex: 1;
-            color: #8899aa;
-            border-radius: 10px;
-            transition: 0.3s;
+
+        .tab-btn { 
+            background: none; 
+            border: none; 
+            padding: 12px; 
+            cursor: pointer; 
+            flex: 1; 
+            color: #b3b3b3; /* 비활성화된 글자는 실버색 */
+            border-radius: 9999px; 
+            font-size: 14px;
+            font-weight: 700; /* 가이드: 버튼은 700(Bold) 선호 */
+            transition: 0.3s; 
         }
-        .tab-btn.active {
-            background: white;
-            color: #2575fc;
-            font-weight: bold;
+
+        .tab-btn.active { 
+            background: #ffffff; 
+            color: #121212; 
         }
+
         .content-section { display: none; min-height: 350px; flex-direction: column; align-items: center; }
         .content-section.active { display: flex; }
-        
-        .breath-container {
-            height: 250px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        /* 4. 명상 원 가이드 반영 */
+        .breath-container { height: 250px; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .breath-circle { 
+            width: 100px; 
+            height: 100px; 
+            background: #ffffff; /* 다크 테마에서 빛나는 하얀 원 */
+            border-radius: 50%; /* 완벽한 원 */
+            animation: breathe 8s infinite ease-in-out; 
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.8); } }
+
+        /* 5. [가이드 반영] 인풋 콤보 및 메인 버튼 */
+        textarea, select { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 4px; 
+            background: #1f1f1f; 
+            color: white;
+            border: 1px solid #4d4d4d; /* 가이드: Border Gray 반영 */
+            margin: 10px 0; 
+            font-size: 16px; 
+            outline: none; 
+            box-sizing: border-box;
+        }
+
+        /* 6. [시그니처] 스포티파이 그린 메인 버튼 */
+        button.main-btn { 
             width: 100%;
+            padding: 15px;
+            background: #1ed760; /* 스포티파이 시그니처 그린 */
+            color: #000000; /* 초록 버튼 위에는 검은 글자 */
+            border: none; 
+            border-radius: 9999px; /* 알약 버튼 */
+            font-size: 14px; 
+            font-weight: 700; 
+            text-transform: uppercase; /* 가이드: 버튼 라벨은 대문자 */
+            letter-spacing: 1.5px; /* 가이드: 1.4px~2px 자간 반영 */
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin: 10px 0;
         }
-        .breath-circle {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            border-radius: 50%;
-            animation: breathe 8s infinite ease-in-out;
-            box-shadow: 0 0 20px rgba(161, 196, 253, 0.3);
-        }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(2.2); }
-        }
-        textarea, select, button.main-btn {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #e0e6ed; margin: 10px 0; font-size: 16px; outline: none;
-        }
-        button.main-btn { background: #2575fc; color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button.main-btn:hover { background: #1a5dbb; }
-        #prescriptionResult { margin-top:20px; background:#f8f9fa; padding:15px; border-radius:12px; font-size: 15px; line-height: 1.6; }
+        button.main-btn:hover { transform: scale(1.04); background: #1db954; }
+
+        #breathText { color: #1ed760; font-weight: bold; font-size: 28px; transition: 0.2s; }
+        #prescriptionResult { margin-top:20px; background:#1f1f1f; padding:15px; border-radius:8px; font-size: 15px; line-height: 1.6; color: #b3b3b3; border: 1px solid #4d4d4d;}
     </style>
 </head>
 <body>
     <div class="laundry-card">
-        <h1>마음세탁소 🫧</h1>
+        <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin-bottom: 25px;">마음세탁소 🫧</h1>
         <div class="tab-menu">
             <button class="tab-btn active" onclick="openTab('wash')">고민 세탁</button>
             <button class="tab-btn" onclick="openTab('breathe')">호흡 건조</button>
             <button class="tab-btn" onclick="openTab('prescription')">마음 처방</button>
         </div>
-        
         <div id="wash" class="content-section active">
-            <p>버리고 싶은 마음을 적어주세요.</p>
-            <textarea id="worryInput" style="height:100px; transition:2s;" placeholder="여기에 고민을 쓰면 세탁됩니다..."></textarea>
-            <button class="main-btn" onclick="startWashing()">세탁 시작 🫧</button>
+            <p style="color: #b3b3b3;">버리고 싶은 마음을 적어주세요.</p>
+            <textarea id="worryInput" placeholder="고민을 쓰면 세탁됩니다..."></textarea>
+            <button class="main-btn" onclick="startWashing()">LAUNDRY START</button>
         </div>
-
         <div id="breathe" class="content-section">
-            <p>원의 리듬에 맞춰 숨을 쉬어보세요.</p>
+            <p style="color: #b3b3b3;">원의 리듬에 맞춰 숨을 쉬어보세요.</p>
             <div class="breath-container"><div class="breath-circle"></div></div>
-            <p id="breathText" style="color:#2575fc; font-weight:bold; font-size:24px;">준비중...</p>
+            <p id="breathText">준비중...</p>
         </div>
-
         <div id="prescription" class="content-section">
-            <p>오늘 마음 상태를 골라주세요.</p>
+            <p style="color: #b3b3b3;">오늘 마음 상태를 골라주세요.</p>
             <select id="moodSelect">
                 <option value="불안">불안해요</option>
                 <option value="분노">화가 나요</option>
                 <option value="지침">너무 지쳤어요</option>
                 <option value="허무">공허해요</option>
             </select>
-            <button class="main-btn" onclick="getPrescription()">처방전 받기 ✨</button>
-            <div id="prescriptionResult"></div>
+            <button class="main-btn" onclick="getPrescription()">GET ADVICE</button>
+            <div id="prescriptionResult">처방전이 여기에 출력됩니다.</div>
         </div>
     </div>
-
     <script>
         function openTab(tabName) {
             const sections = document.getElementsByClassName('content-section');
@@ -124,51 +150,34 @@
             if (tabName === 'breathe') startBreathGuide();
             else stopBreathGuide();
         }
-
         function startWashing() {
             const input = document.getElementById('worryInput');
             if (!input.value.trim()) return alert("고민을 적어주세요!");
             input.style.opacity = "0";
             setTimeout(() => { input.value = ""; input.style.opacity = "1"; alert("세탁 완료! 🫧"); }, 2000);
         }
-
         let breathTimer = null;
         let count = 4;
         let mode = "들숨";
-
         function startBreathGuide() {
             const text = document.getElementById('breathText');
-            stopBreathGuide(); // 중복 방지
-            
-            count = 4;
-            mode = "들숨";
+            stopBreathGuide();
+            count = 4; mode = "들숨";
             text.innerText = `${mode}... ${count}`;
-
             breathTimer = setInterval(() => {
                 count--;
-                if (count <= 0) {
-                    count = 4;
-                    mode = (mode === "들숨") ? "날숨" : "들숨";
-                }
-                text.innerText = `${mode}... ${count}`;
-            }, 1000); // 1초마다 숫자 변경
+                text.style.opacity = "0.3";
+                setTimeout(() => {
+                    if (count <= 0) { count = 4; mode = (mode === "들숨") ? "날숨" : "들숨"; }
+                    text.innerText = `${mode}... ${count}`;
+                    text.style.opacity = "1";
+                }, 200);
+            }, 1050);
         }
-
-        function stopBreathGuide() {
-            if (breathTimer) {
-                clearInterval(breathTimer);
-                breathTimer = null;
-            }
-        }
-
+        function stopBreathGuide() { if (breathTimer) { clearInterval(breathTimer); breathTimer = null; } }
         function getPrescription() {
             const mood = document.getElementById('moodSelect').value;
-            const advice = {
-                "불안": "불안은 미래에 가 있는 마음입니다. 지금 발바닥의 감각에 집중해 보세요.",
-                "분노": "화는 뜨거운 숯불을 던지기 위해 쥐고 있는 것과 같습니다. 당신의 손부터 보호하세요.",
-                "지침": "아무것도 하지 않는 것은 '회복'입니다. 오늘 10분만 멍하게 있어보세요.",
-                "허무": "공허함은 새로운 것을 채울 수 있는 빈 그릇입니다. 작은 기쁨을 담아보세요."
-            };
+            const advice = { "불안": "불안은 미래에 가 있는 마음입니다. 지금 발바닥의 감각에 집중해 보세요.", "분노": "화는 뜨거운 숯불을 던지기 위해 쥐고 있는 것과 같습니다. 당신의 손부터 보호하세요.", "지침": "아무것도 하지 않는 것은 '회복'입니다. 오늘 10분만 멍하게 있어보세요.", "허무": "공허함은 새로운 것을 채울 수 있는 빈 그릇입니다. 작은 기쁨을 담아보세요." };
             document.getElementById('prescriptionResult').innerText = advice[mood];
         }
     </script>
